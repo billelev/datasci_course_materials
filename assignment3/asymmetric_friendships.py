@@ -1,4 +1,5 @@
-# unique_trims.py dna.json
+# asymmetric_friendships.py asymmetric_friendships.json
+# asymmetric_friendships.py symmetric_friendships.json
 
 import MapReduce
 import json
@@ -9,34 +10,35 @@ mr = MapReduce.MapReduce()
 # Map function
 # mr - MapReduce object
 # data - json object formatted as a string
-#def mapper(mr, record):
 def mapper(record):
-	# Record: (sequence id, nucleotides)
+	# Record: (PersonA, PersonB)
     # key: PersonA
     # value: PersonB
-	#data = json.loads(record, encoding='latin-1') # for local use
-	data = record # for submitted results
-	
-	#print data[1]
+	#data = json.loads(record, encoding='latin-1')
+	data = record
+	#print data[0]
 	#print str(record)
-	
-	nucFull = data[1]
-	#print nucFull
-	nucCrop = nucFull[0:(len(nucFull)-10)]
-	#print nucFull + " " + nucCrop + "\n"
-	mr.emit_intermediate(nucCrop, data[0])
+	sort = sorted(data)
+	key = sort[0] + "," + sort[1]
+	#print str(type(key))
+	#print key
+	mr.emit_intermediate(key, 1)
 
 # Reduce function
 # mr - MapReduce object
 # key - key generated from map phse, associated to list_of_values
 # list_of_values - values generated from map phase, associated to key
-#def reducer(mr, key, list_of_values):
 def reducer(key, list_of_values):
-    # key: cropped nucleotide
-    # value: list of sequence id's
+    # key: as a string: sorted(PersonA, PersonB)
+    # value: Count of sorted(PersonA, PersonB)
     # output key, value
 	#print "Yay \n"
-	mr.emit(key)
+	if len(list_of_values) == 1:
+		person = key.split(",")
+		personA = person[0]
+		personB = person[1]
+		mr.emit((personA, personB))
+		mr.emit((personB, personA))
 
 
 def main():

@@ -1,12 +1,16 @@
+# This will import twitter data.  Ctrl-C to break.
+# $ python twitterstream.py
+# $ python twitterstream.py > output.txt
+
 import oauth2 as oauth
 import urllib2 as urllib
 
 # See Assignment 1 instructions or README for how to get these credentials
-access_token_key = "<Enter your access token key here>"
-access_token_secret = "<Enter your access token secret here>"
+access_token_key = "84981851-jdSdHoPfFVMINiuaf5cuP1IU8XC1XFkzlt89fGSp8"
+access_token_secret = "nqha1Lt8EA0onUI4ifTFIpWWoDf2CJskBh6q1biTxT4"
 
-consumer_key = "<Enter consumer key>"
-consumer_secret = "<Enter consumer secret>"
+consumer_key = "JEBWRmuxCgL6EhPc8RjQtA"
+consumer_secret = "0eHXtYOrXwyAUygNslmxK9uro5PVcdkqTWBDc8YErh0"
 
 _debug = 0
 

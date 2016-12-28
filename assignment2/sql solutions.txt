@@ -1,0 +1,67 @@
+
+Problem 2
+
+select a.row_num, b.col_num, sum(a.value* b.value)
+from a
+inner join b
+where a.col_num = b.row_num
+group by a.row_num, b.col_num
+
+select a.row_num, b.col_num, sum(a.value* b.value)
+from a
+inner join b
+where a.col_num = b.row_num and a.row_num = 2 and b.col_num = 3
+group by a.row_num, b.col_num
+
+
+Problem 3 (a)
+
+select a.docid, b.docid, sum(a.count * b.count) as product
+from (select * from frequency where docid='10080_txt_crude' or docid='17035_txt_earn') as a
+inner join (select * from frequency where docid='10080_txt_crude' or docid='17035_txt_earn') as b
+where a.term = b.term
+group by a.docid, b.docid
+
+a.docid	b.docid	product
+10080_txt_crude	10080_txt_crude	1828
+10080_txt_crude	17035_txt_earn	19
+17035_txt_earn	10080_txt_crude	19
+17035_txt_earn	17035_txt_earn	144
+
+
+Problem 3 (b)
+
+SELECT * FROM frequency
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+
+
+select a.docid, b.docid, sum(a.count * b.count) as product
+from (
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+) as a
+inner join (
+SELECT * FROM frequency
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+) as b
+where a.term = b.term
+group by a.docid, b.docid
+
+
+
+
+
+
